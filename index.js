@@ -34,10 +34,8 @@ module.exports = postcss.plugin('postcss-px-to-em', function (opts) {
   };
 
   return function (css) {
-    css.eachInside(function(node) {
-      if (node.type === 'decl') {
-        node.value = convert(node._value ? node._value.raw : node.value);
-      }
+     css.walkDecls(function(node) {
+      node.value = convert(node.raws.value ? node.raws.value.raw : node.value);
     });
   };
 });
